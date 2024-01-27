@@ -29,7 +29,9 @@ export default async function Home() {
     console.error('Fetch error:', error);
     return (
       <main>
-        <p>Error loading blog posts</p>
+        <Hero />
+        <p className="py-32 text-center text-4xl">Error loading blog posts</p>
+        <Cta />
       </main>
     );
   }
