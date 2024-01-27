@@ -9,7 +9,6 @@ interface Blog {
   readTime: string;
   date: string;
   image: string;
-  // Add other properties as needed
 }
 interface BlogsProps {
   posts: Blog[];
