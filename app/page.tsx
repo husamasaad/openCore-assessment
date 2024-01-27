@@ -1,38 +1,20 @@
 import Blogs from "@/components/Blogs";
 import Hero from "@/components/Hero";
 import Cta from "@/components/Cta";
+import { promises as fs } from 'fs';
 
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
 
 export default async function Home() {
-  try {
-    const res = await fetch(`${baseUrl}/api/blogPosts`, {
-      headers: {
-        'Accept': 'application/json',
-      },
-    });
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! Status: ${res.status}`);
-    }
+  const file = await fs.readFile(process.cwd() + '/json/blogs.json', 'utf8');
 
-    const posts = await res.json();
+  const posts = await JSON.parse(file)
 
-    return (
-      <main>
-        <Hero />
-        <Blogs posts={posts} />
-        <Cta />
-      </main>
-    );
-  } catch (error) {
-    console.error('Fetch error:', error);
-    return (
-      <main>
-        <Hero />
-        <p className="py-32 text-center text-4xl">Error loading blog posts</p>
-        <Cta />
-      </main>
-    );
-  }
+  return (
+    <main>
+      <Hero />
+      <Blogs posts={posts} />
+      <Cta />
+    </main>
+  );
 }
